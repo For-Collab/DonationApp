@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Bottom Navigator</string>
+    <string name="main_page_selected">%s page</string>
+</resources>

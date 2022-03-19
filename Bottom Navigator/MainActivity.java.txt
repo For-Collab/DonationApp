@@ -1,0 +1,78 @@
+package com.example.bottomnavigator;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+
+public class MainActivity extends AppCompatActivity {
+
+    private final int ID_HOME = 1;
+    private final int ID_MESSAGE = 2;
+    private final int ID_NOTIFICATION = 3;
+    private final int ID_DEFAULT = 4;
+    private final int ID_ACCOUNT = 5;
+
+    MeowBottomNavigation bottomNavigation;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        TextView selected_page = findViewById(R.id.selected_page);
+        bottomNavigation = findViewById(R.id.bottomNavigation);
+
+        bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.ic_baseline_home_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.ic_baseline_message_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.ic_baseline_notifications_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.ic_baseline_lock_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(5,R.drawable.ic_baseline_account_circle_24));
+
+        bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+            @Override
+            public void onClickItem(MeowBottomNavigation.Model Item){
+                Toast.makeText(MainActivity.this, "clicked Item : " + Item.getId() , Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+            @Override
+            public void onShowItem(MeowBottomNavigation.Model Item){
+
+                String name;
+                switch (Item.getId()){
+                    case ID_HOME:name = "Home";
+                    break;
+                    case ID_MESSAGE:name = "message";
+                    break;
+                    case ID_NOTIFICATION: name = "notification";
+                    break;
+                    case ID_DEFAULT: name = "Default";
+                    break;
+                    case ID_ACCOUNT: name = "Account";
+                    break;
+                    default:name ="";
+                }
+                selected_page.setText(getString(R.string.main_page_selected, name));
+            }
+        });
+
+        bottomNavigation.setCount(ID_NOTIFICATION, "4");
+        bottomNavigation.show(ID_HOME, true);
+//        bottomNavigation.show(ID_ACCOUNT, true);
+//        bottomNavigation.show(ID_DEFAULT, true);
+//        bottomNavigation.show(ID_MESSAGE, true);
+
+
+    }
+}
+
